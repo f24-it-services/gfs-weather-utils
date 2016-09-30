@@ -23,21 +23,25 @@ export default class Grid {
     let y = Math.floor(fy)
     let x = Math.floor(fx)
 
+    // console.log(fy, fx, y, x)
+
     if (fy === y && fx === x) {
       return this.get(x, y)
     }
 
     let g00 = this.get(x, y)
     let g10 = this.get(x + 1, y)
-    let g01 = this.get(x, y - 1)
-    let g11 = this.get(x + 1, y - 1)
+    let g01 = this.get(x, y + 1)
+    let g11 = this.get(x + 1, y + 1)
+
+    // console.log(g00, g10, g01, g11)
 
     if (!g00 || !g10 || !g01 || !g11) {
       return null
     }
 
     return g00.map((v, i) =>
-      this.__interpolate(x, y, g00[i], g10[i], g01[i], g11[i])
+      this.__interpolate(fx - x, fy - y, g00[i], g10[i], g01[i], g11[i])
     )
   }
 
@@ -49,12 +53,12 @@ export default class Grid {
     const b = x * ry
     const c = rx * y
     const d = x * y
-
+    // console.log(`${g00} * ${a} + ${g10} * ${b} + ${g01} * ${c} + ${g11} * ${d}`)
     return g00 * a + g10 * b + g01 * c + g11 * d
   }
 
   lnglat (x, y) {
-    return [this.lo1 + x * this.dx - 180, this.la1 - y * this.dy]
+    return [(180 + this.lo1 + x * this.dx) % 360 - 180, this.la1 - y * this.dy]
   }
 
   map (cb) {

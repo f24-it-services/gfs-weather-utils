@@ -1,7 +1,7 @@
 # gfs-weather-utils
 
 Utility code used by different gfs-weather-* packages. Read the source for more
-info about this packge :)
+info about this package :)
 
 ## License
 
