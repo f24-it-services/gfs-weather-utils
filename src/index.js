@@ -17,3 +17,18 @@ export function sequence (callbacks, withResults = true) {
     })
   }, Promise.resolve())
 }
+
+export function wrapLngLat ([lng, lat]) {
+  return [
+    wrapLng(lng),
+    wrapLat(lat)
+  ]
+}
+
+export function wrapLng (lng) {
+  return ((lng + 180) % 360 + 360) % 360 - 180
+}
+
+export function wrapLat (lat) {
+  return lat
+}
